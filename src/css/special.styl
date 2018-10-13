@@ -1,0 +1,340 @@
+@import 'mq'
+
+@import 'functions'
+@import 'keyframes'
+
+$colors = {
+  white: #ffffff,
+  black: #000000
+}
+
+body
+  margin: 0
+
+.mailru
+  position: relative
+  z-index: 99
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 640px
+  max-width: 100%
+  height: 100vh
+  min-height: 600px
+  margin: 0 auto
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px
+  line-height: normal
+  text-size-adjust: 100%
+  background-color: #000
+  background-color: rgba(0,0,0,.6);
+  overflow: hidden
+
+  @media $mq.not_mobile
+    font-size: 18px
+
+  & *
+  & *:before
+  & *:after
+    box-sizing: border-box
+
+  svg
+    display block
+    fill currentColor
+    pointer-events none
+
+  & b
+    font-weight: 700
+
+  & button
+    font-family: inherit
+    font-size: inherit
+    outline: none
+    cursor: pointer
+    appearance: none
+
+  &__loader
+    color: #fff
+    font-size: 250px
+    font-weight: 700
+    line-height: 1
+
+  &-timeline
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+
+    &__section
+      flex-shrink: 0
+      position: relative
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 100%
+      height: 100%
+
+  //&-line
+  //  position: absolute
+  //  top: 0
+  //  left: 0
+  //  right: 0
+  //  margin: 0 auto
+  //  width: 6px
+  //  height: 100%
+  //  background-color: rgba(255, 255, 255, .5)
+  //  transform: translate3d(0, 560px, 0)
+
+  &-enter
+    position: relative
+    width: 600px
+    max-width: 100%
+
+    &__title
+      color: #ffffff
+      font-size: 48px
+      font-weight: 700
+
+    &__text
+      margin-top: 40px
+      color: #ffffff
+      line-height: 1.667em
+
+      & p
+        padding: 0
+        margin: 0 !important
+
+        &:not(:last-child)
+          margin-bottom: 1.667em !important
+
+    &__start
+      position: relative
+      display: inline-block
+      margin-top: 50px
+
+    &__start-btn
+      width: 200px
+      height: 59px
+      padding: 0
+      color: rgba(255, 255, 255, .5)
+      font-weight: 700
+      border: 6px solid rgba(255, 255, 255, .5)
+      background-color: transparent
+
+      &:hover
+        color: #000
+        border-color: rgba(255, 255, 255, 0)
+        background-color: rgba(255, 255, 255, .5)
+
+    &__start-line
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 100%
+      margin: auto 0
+      width: 97px
+      height: 6px
+      background-color: rgba(255, 255, 255, .5)
+
+  &-year
+    color: #ffffff
+    font-size: 72px
+    font-weight: 700
+    line-height: 1
+
+  &-pager
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%
+    background-color: #000000
+    overflow: hidden
+
+    &::before,
+    &::after
+      content: ''
+      position: absolute
+      top: 0
+      bottom: 0
+      width: 50%
+      height: 100%
+
+    &::before
+      left: 0
+      background-image linear-gradient(to right, #000, transparent)
+
+    &::after
+      right: 0
+      background-image linear-gradient(to left, #000, transparent)
+
+    &__inner
+      display: flex
+      align-items: center
+      height: 60px
+      transform: translateX(calc(50% - 50px))
+      transition: transform .2s
+
+    &__item
+      flex-shrink: 0
+      width: 100px
+      color: #ffffff
+      text-align: center
+
+      &--active
+        font-weight: 700
+
+  &-q
+    position: relative
+    height: 600px
+    padding-top: 20px
+    background-color: #DEDEDE
+    overflow: hidden
+    box-shadow 3px 3px 0 rgba(0,0,0,.25)
+
+    &--second
+      border: 1px solid #000000
+      border-radius: 5px
+      background-color: #ffffff
+      box-shadow: none
+
+    &__frame
+      position: absolute
+      z-index: 1
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+
+      &--first
+        bottom: 0
+        background-image: url('../images/frame.png')
+        background-size: cover
+
+      &--second
+        height: 25px
+        background-image: url('../images/frame2.jpg')
+        background-size: 100%
+
+    &__pager
+      position: absolute
+      z-index: 2
+      top: 3px
+      left: 0
+      right: 0
+      font-size: 16px
+      font-weight: 700
+      line-height: 1
+      text-align: center
+
+    &__logo
+      position: absolute
+      z-index: 3
+      top: 4px
+      right: 38px
+
+    &__img
+      display: block
+      width: 100%
+
+    &__body
+      position: relative
+      z-index: 3
+      height: 340px
+      padding: 20px 40px
+
+    &__text
+      line-height: 1.667em
+
+    &__options
+      margin-top: 25px
+
+      &--second
+        display: flex
+        flex-wrap wrap
+        padding-top: 50px
+        margin: -10px 0 0 -10px
+
+    &__options-item
+
+      &--first
+        &:not(:last-child)
+          margin-bottom: 10px
+
+      &--second
+        width: 50%
+        padding: 10px 0 0 10px
+
+    &__option
+      cursor: pointer
+
+      &--first
+        line-height: 1
+        border-bottom: 1px solid currentColor
+
+        &:hover
+          color: #FF3535
+
+          @media (hover none), (hover on-demand)
+            color: #000000
+
+      &--second
+        position: relative
+        display: block
+        height: 70px
+        color: #ffffff
+        line-height: 70px
+        text-align: center
+        border: 1px solid #000
+        border-radius: 5px
+        background-color: #4F5B71
+
+        &::before
+          content: ''
+          position: absolute
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
+          border: 1px solid #fff
+          border-radius: 5px
+
+    &__answer
+      font-size: 24px
+      font-weight: 700
+      line-height: 1
+
+      &--correct
+        color: #33A860
+
+      &--incorrect
+        color: #FF3535
+
+    &__answer-msg
+      margin-top: 28px
+      line-height: 1.778em
+
+      & a
+        color: inherit !important
+        border-bottom: 1px solid currentColor
+
+        &:hover
+          color: #ff3535 !important
+
+    &__next-btn
+      position: absolute
+      bottom: 45px
+      left: 40px
+      width: 200px
+      height: 50px
+      border: 1px solid #000000
+      border-radius: 5px
+      background-color: transparent
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,.75)
+
+
