@@ -34,15 +34,16 @@
                 new Mailru.Special({
                   css: './all.css?' + ver,
                   container: container,
+                  isFeed: document.querySelector('[air-module="module.feed"]') ? true : false,
                   share: {
-                    url: 'https://vc.ru/special/url',
-                    title: 'Title'
+                    url: 'https://tjournal.ru/special/mailru/result',
+                    title: 'История рунета'
                   }
                 });
               };
               d.body.appendChild(s);
             }
-        })(document, 16);
+        })(document, 17);
     </script>
 
 </body>
