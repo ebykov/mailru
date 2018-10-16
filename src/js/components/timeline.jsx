@@ -4,96 +4,66 @@ import Question from './question';
 import { requestAnimate } from '../lib/animate';
 import Data from '../data';
 import {connect} from "preact-redux";
+import PerfectScrollbar from 'perfect-scrollbar';
 
+const makePerfectScroll = () => {
+  let containers = document.querySelectorAll('.js-perfect-scrollbar-tl');
+  [].slice.call(containers).forEach((item) => {
+    new PerfectScrollbar(item);
+  });
+};
 
 class Timeline extends Component {
-  constructor() {
-    super();
 
-    // this.onStart = this.onStart.bind(this);
-    // this.onNext = this.onNext.bind(this);
-    //
-    // this.scrollTo = this.scrollTo.bind(this);
+  componentDidMount() {
+    makePerfectScroll();
   }
 
-  // onStart() {
-  //   requestAnimate({
-  //     duration: 2000,
-  //     timing: t => (.5 + Math.pow((t*1.6-0.80625), 3)).toFixed(3),
-  //     draw: progress => {
-  //       let y = this.props.containerHeight * 2 * progress;
-  //       this.setState({
-  //         offsetY: y,
-  //       });
-  //     },
-  //     end: () => {
-  //       this.props.onStart();
-  //     }
-  //   });
-  // }
-  //
-  // onNext(index) {
-  //   requestAnimate({
-  //     duration: 2000,
-  //     timing: t => (.5 + Math.pow((t*1.6-0.80625), 3)).toFixed(3),
-  //     draw: progress => {
-  //       let p = progress < 0 ? 0 : progress;
-  //       let y = this.props.containerHeight * 2 * p;
-  //       this.setState({
-  //         offsetY: (this.props.containerHeight * (index * 2)) + y,
-  //       });
-  //     }
-  //   });
-  // }
-  //
-  // scrollTo() {
-  //   requestAnimate({
-  //     duration: 2000,
-  //     timing: t => (.5 + Math.pow((t*1.6-0.80625), 3)).toFixed(3),
-  //     draw: progress => {
-  //       let p = progress < 0 ? 0 : progress;
-  //       let y = this.props.containerHeight * 2 * p;
-  //       this.setState({
-  //         offsetY: (this.props.containerHeight * (index * 2)) + y,
-  //       });
-  //     }
-  //   });
-  // }
-
-  // slide() {
-  //   requestAnimate({
-  //     duration: 2000,
-  //     timing: t => (.5 + Math.pow((t*1.6-0.80625), 3)).toFixed(3),
-  //     draw: progress => {
-  //       let p = progress < 0 ? 0 : progress;
-  //       let y = this.props.height * 2 * p;
-  //       this.setState({
-  //         offsetY: (this.props.containerHeight * (index * 2)) + y,
-  //       });
-  //     }
-  //   });
-  // }
-
   render(props, state) {
-    let sections1 = [
+    let sectionEnter = [
       (
-        <div className="mailru-timeline__section" style={{height: props.test.height}}>
-          <Enter />
+        <div className="mailru-timeline__section js-perfect-scrollbar-tl" style={{height: props.test.height}}>
+          <div className="mailru-timeline__section-inner">
+            <Enter />
+          </div>
         </div>
       )
     ]
-    let sections2 = Data.questions.map((question, index) => {
+    let sectionsQ = Data.questions.map((question, index) => {
       return ([
-        <div className="mailru-timeline__section" style={{height: props.test.height}}>
-          <div className="mailru-year">{question.year}</div>
-        </div>,
-        <div className="mailru-timeline__section" style={{height: props.test.height}}>
-          <Question index={index} question={question} />
+        ( question.era ?
+          <div className="mailru-timeline__section" style={{height: props.test.height}}>
+            <div className="mailru-timeline__section-inner">
+              { question.era.images.map((item) => {
+                return (
+                  item.style.animation ?
+                    <div style={Object.assign({}, item.style, {width: '', animation: ''})}>
+                      <img src={item.img} srcSet={`${item.img2x} 2x`} className="mailru-era-img" style={item.style}/>
+                    </div>
+                    : <img src={item.img} srcSet={`${item.img2x} 2x`} className="mailru-era-img" style={item.style}/>
+                )
+              }) }
+              <div className="mailru-line">
+                <div className="mailru-line__item" />
+                <div className="mailru-line__item" />
+              </div>
+              <div className="mailru-year">{question.year}</div>
+            </div>
+          </div>
+          : null ),
+        <div className="mailru-timeline__section js-perfect-scrollbar-tl" style={{height: props.test.height}}>
+          <div className="mailru-timeline__section-inner">
+            <div className="mailru-line">
+              <div className="mailru-line__item" />
+              <div className="mailru-line__item" />
+            </div>
+            <Question index={index} question={question} />
+          </div>
         </div>
       ]);
     });
 
-    let sections = [...sections1, ...sections2];
+    let sections = [...sectionEnter, ...sectionsQ];
 
     return (
       <div className="mailru-timeline" style={{transform: `translateY(-${props.test.offsetY}px)`}}>

@@ -3,6 +3,7 @@ import { h, render } from 'preact';
 import { Provider, connect } from 'preact-redux';
 import App from './components/app';
 import store from './store';
+import * as Analytics from "./lib/analytics";
 
 export default class Special {
   constructor(params = {}) {
@@ -33,12 +34,16 @@ export default class Special {
   init() {
     const Main = () => (
       <Provider store={store}>
-        <App container={this.container} />
+        <App container={this.container} params={this.params} />
       </Provider>
     )
 
     render(<Main />, this.container);
-    // render(<App container={this.container} />, this.container);
-    // render(<div className="mailru-bg" />, document.body);
+
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'a') {
+        Analytics.sendEvent(e.target.href);
+      }
+    })
   }
 }

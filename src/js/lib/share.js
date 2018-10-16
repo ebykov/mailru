@@ -19,12 +19,12 @@ export const init = () => {
  */
 export const make = (parentContainer, set = {}) => {
     let likelyContainer = makeElement('div', [CSS.likely, CSS.likelyCustom]);
-    let socials = ['facebook', 'vkontakte', 'twitter'];
+    let socials = ['vkontakte', 'facebook', 'twitter'];
 
     socials.forEach(social => {
         let button = makeElement('div', social);
 
-        if (social === 'facebook') button.innerHTML = 'Поделиться';
+        if (social === 'vkontakte') button.innerHTML = 'Поделиться';
 
         button.addEventListener('click', () => {
             Analytics.sendEvent(`Share ${social}`);

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://s38736.cdn.ngenix.net/static/build/vc.ru/all.min.css?9a6ff7a9">
 </head>
 
-<body>
+<body style="padding-top: 50px">
 
     <!-- Если спецпроект интегрирован в статью, используется такая конструкция -->
     <div id="mailru-app"></div>
@@ -34,9 +34,10 @@
                 new Mailru.Special({
                   // css: './all.css?' + ver,
                   container: container,
+                  isFeed: true || document.querySelector('[air-module="module.feed"]') ? true : false,
                   share: {
-                    url: 'https://vc.ru/special/url',
-                    title: 'Title'
+                    url: 'https://tjournal.ru/special/mailru/result',
+                    title: 'История рунета'
                   }
                 });
               };

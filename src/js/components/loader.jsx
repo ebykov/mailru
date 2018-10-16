@@ -27,7 +27,6 @@ export default class Loader extends Component {
         setTimeout(() => {
           store.dispatch({
             type: 'TEST_LOADED',
-            isLoaded: true
           });
         }, 500);
       }

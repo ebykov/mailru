@@ -1,52 +1,92 @@
 import { createStore, combineReducers } from 'redux';
-import { requestAnimate } from './lib/animate';
-
-const slideTo = (index, height, callback) => {
-  requestAnimate({
-    duration: 2000,
-    timing: t => (.5 + Math.pow((t * 1.6 - 0.80625), 3)).toFixed(3),
-    draw: progress => {
-      let p = progress < 0 ? 0 : progress;
-      let y = height * 2 * p;
-      let offsetY = height * (index * 2) + y;
-      callback(offsetY);
-    }
-  });
-};
+import Data from './data';
 
 const initialTestState = {
-  isLoaded: false,
-  isStarted: false,
+  params: {},
+  status: 'LOADING',
   height: 0,
   offsetY: 0,
-  slideTo: slideTo,
+  activeIndex: 0,
+  correctAnswers: 0,
+  currentQuestion: Data.questions[0],
+  planetAnimation: '',
+  bg: '#000',
+  checkGifts: {},
+};
+
+const restartTestState = {
+  status: 'STARTED',
+  height: 0,
+  offsetY: 0,
+  activeIndex: 0,
+  correctAnswers: 0,
+  currentQuestion: Data.questions[0],
+  planetAnimation: '',
+  checkGifts: {},
 };
 
 const testReducer = function(state = initialTestState, action) {
-  console.log(action);
+  let h = window.innerHeight - 50;
+  if (state.params.isFeed) {
+    h = h > 660 ? 660 : h;
+  }
+
   switch (action.type) {
+    case 'TEST_PARAMS':
+      return Object.assign({}, state, {
+        params: action.params,
+      });
+    case 'TEST_BG_CHANGE':
+      return Object.assign({}, state, {
+        bg: action.bg,
+      });
+    case 'TEST_SET_HEIGHT':
+      return Object.assign({}, state, {
+        height: h,
+      });
     case 'TEST_LOADED':
       return Object.assign({}, state, {
-        isLoaded: action.isLoaded
+        status: 'LOADED',
       });
     case 'TEST_STARTED':
       return Object.assign({}, state, {
-        isStarted: action.isStarted
+        status: 'STARTED'
       });
-    case 'HEIGHT_CHANGE':
+    case 'TEST_FINISHED':
       return Object.assign({}, state, {
-        height: action.height
+        status: 'FINISHED'
       });
     case 'TEST_SLIDE':
       return Object.assign({}, state, {
-        offsetY: action.offsetY
+        offsetY: action.offsetY,
+      });
+    case 'TEST_ANSWER':
+      return Object.assign({}, state, {
+        planetAnimation: '',
+        correctAnswers: action.isCorrect ? state.correctAnswers + 1 : state.correctAnswers,
+      });
+    case 'TEST_CONTINUE':
+      return Object.assign({}, state, {
+        activeIndex: state.activeIndex + 1,
+        planetAnimation: 'planetJump .6s ease-out'
+      });
+
+    case 'TEST_RESTART':
+      return Object.assign({}, state, restartTestState, {
+        height: h,
+        offsetY: h * 2,
+      });
+
+    case 'CHECK_GIFTS':
+      return Object.assign({}, state, {
+        checkGifts: action.data
       });
   }
 
   return state;
 };
 
-// Combine Reducers
+
 const reducers = combineReducers({
   testState: testReducer,
 });

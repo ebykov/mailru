@@ -25,20 +25,20 @@ module.exports = (env, options) => {
     },
     devtool: inProd ? 'source-map' : false,
     optimization: {
-      minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true
-        }),
-        new OptimizeCSSAssetsPlugin({
-          cssProcessorOptions: {
-            map: {
-              inline: false
-            }
-          }
-        })
-      ]
+      // minimizer: [
+      //   new UglifyJsPlugin({
+      //     cache: true,
+      //     parallel: true,
+      //     sourceMap: true
+      //   }),
+      //   new OptimizeCSSAssetsPlugin({
+      //     cssProcessorOptions: {
+      //       map: {
+      //         inline: false
+      //       }
+      //     }
+      //   })
+      // ]
     },
     plugins: inProd
       ? [
